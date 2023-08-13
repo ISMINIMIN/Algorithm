@@ -14,7 +14,7 @@ public class B15661 {
 		StringTokenizer st;
 		
 		N = Integer.parseInt(br.readLine());
-		visited = new boolean[N];
+		visited = new boolean[N]; 
 		
 		S = new int[N][N];
 		for(int i=0; i<N; i++) {
