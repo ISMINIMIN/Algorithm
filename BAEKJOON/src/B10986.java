@@ -8,7 +8,7 @@ public class B10986 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
-		st = new StringTokenizer(br.readLine());
+		st = new StringTokenizer(br.readLine()); 
 		int N = Integer.parseInt(st.nextToken()); // 주어지는 숫자 개수
 		int M = Integer.parseInt(st.nextToken()); // 나누는 수
 		
