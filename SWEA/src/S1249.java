@@ -33,7 +33,7 @@ public class S1249 {
 			check = new int[N][N];
 			for(int i=0; i<N; i++) {
 				for(int j=0; j<N; j++) {
-					check[i][j] = Integer.MAX_VALUE;
+					check[i][j] = Integer.MAX_VALUE; 
 				}
 			}
 			
