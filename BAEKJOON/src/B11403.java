@@ -12,7 +12,7 @@ public class B11403 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
-		N = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(br.readLine()); 
 		
 		map = new int[N][N];
 		
