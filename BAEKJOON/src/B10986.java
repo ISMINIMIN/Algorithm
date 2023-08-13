@@ -25,7 +25,7 @@ public class B10986 {
 		long result = remainderCount[0]; // 나머지가 0인 경우 해당 구간의 합은 M으로 나누어 떨어진다는 의미이므로 result 변수에 저장
 		for(int i=0; i<M; i++) {
 			if(remainderCount[i] > 1) { // 나머지 개수가 2개 이상인 구간의 경우
-				result += (remainderCount[i] * (remainderCount[i]-1)) / 2; // 나머지가 같은 구간 중 2개를 뽑는 경우의 수를 result에 더함
+				result += (remainderCount[i] * (remainderCount[i]-1)) / 2; // 나머지가 같은 구간 중 2개를 뽑는 경우의 수를 result에 더하기
 			}
 		}
 		
