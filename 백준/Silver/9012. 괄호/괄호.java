@@ -17,13 +17,12 @@ public class Main {
 			for(int i=0; i<line.length(); i++) {
 				char c = line.charAt(i);
 				
-				if(stack.isEmpty() && c == '(') stack.push(c);
-				else if(stack.isEmpty() && c == ')') {
+				if(c == '(') stack.push(c);
+				else if(stack.isEmpty()) {
 					flag = false;
 					break;
 				}
-				else if(c == '(') stack.push(c);
-				else if(c == ')') stack.pop();
+				else stack.pop();
 			}
 			
 			if(flag && stack.isEmpty()) System.out.println("YES");
