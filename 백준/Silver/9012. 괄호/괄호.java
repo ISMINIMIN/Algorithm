@@ -12,20 +12,21 @@ public class Main {
 		for(int t=0; t<T; t++) {
 			Stack<Character> stack = new Stack<>();
 			String line = br.readLine();
-			boolean flag = true;
 			
 			for(int i=0; i<line.length(); i++) {
 				char c = line.charAt(i);
 				
 				if(c == '(') stack.push(c);
-				else if(stack.isEmpty()) {
-					flag = false;
-					break;
+				else {
+					if(stack.isEmpty()) {
+						stack.push(c);
+						break;
+					}
+					else stack.pop();
 				}
-				else stack.pop();
 			}
 			
-			if(flag && stack.isEmpty()) System.out.println("YES");
+			if(stack.isEmpty()) System.out.println("YES");
 			else System.out.println("NO");
 		}
 	}
