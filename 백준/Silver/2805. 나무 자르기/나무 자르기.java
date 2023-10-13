@@ -13,7 +13,7 @@ public class Main {
 		int[] trees = new int[N];
 		
 		int max = 0;
-		int min = 1;
+		int min = 0;
 		int answer = 0;
 		
 		st = new StringTokenizer(br.readLine());
