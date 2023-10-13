@@ -11,15 +11,24 @@ public class Main {
 		String line = br.readLine();
 		
 		int count = 0;
-		String IOI = "I";
-		for(int i=0; i<N; i++) {
-			IOI += "OI";
+		int answer = 0;
+		
+		for(int i=1; i<M-1;) {
+			if(line.charAt(i) == 'O' && line.charAt(i+1) == 'I') {
+				count++;
+				
+				if(count == N) {
+					if(line.charAt(i-(count*2-1)) == 'I') answer++;
+					count--;
+				}
+				
+				i += 2;
+			} else {
+				count = 0;
+				i++;
+			}
 		}
 		
-		for(int i=0; i<M-IOI.length()+1; i++) {
-			if(line.substring(i, i+IOI.length()).equals(IOI)) count++;
-		}
-		
-		System.out.println(count);
+		System.out.println(answer);
 	}
 }
