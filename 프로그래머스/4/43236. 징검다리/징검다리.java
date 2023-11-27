@@ -19,6 +19,7 @@ class Solution {
                     delete++;
                     continue;
                 }
+                
                 temp = rocks[i];
                 
                 if(distance - temp < mid) {
@@ -32,8 +33,6 @@ class Solution {
             } else {
                 right = mid - 1;
             }
-            
-            System.out.println(delete + " " + mid);
         }
         
         return answer;
