@@ -4,24 +4,13 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int R, C;
-	static int result = 0;
-	static int[][] board;
-	static boolean[] used;
-	
 	static int[] dy = {-1, 1, 0, 0};
 	static int[] dx = {0, 0, -1, 1};
 	
-	static class Node {
-		int y;
-		int x;
-		int count;
-		
-		public Node(int y, int x) {
-			this.y = y;
-			this.x = x;
-		}
-	}
+	static int max = 1;
+	static int R, C;
+	static char[][] board;
+	static boolean[] alphabet;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,26 +19,27 @@ public class Main {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		
-		board = new int[R][C];
-		used = new boolean[26];
+		alphabet = new boolean[26];
+		board = new char[R][C];
 		
-		for(int i=0; i<R; i++) {
+		for(int y=0; y<R; y++) {
 			String line = br.readLine();
-			for(int j=0; j<C; j++) {
-				board[i][j] = line.charAt(j) - 'A';
+			for(int x=0; x<C; x++) {
+				board[y][x] = line.charAt(x);
 			}
 		}
 		
 		dfs(0, 0, 0);
-		System.out.println(result);
+		
+		System.out.println(max);
 	}
 
 	private static void dfs(int y, int x, int count) {
-		if(used[board[y][x]]) {
-			result = Math.max(result, count);
+		if(alphabet[board[y][x] - 'A']) {
+			max = Math.max(max, count);
 			return;
 		} else {
-			used[board[y][x]] = true;
+			alphabet[board[y][x] - 'A'] = true;
 			
 			for(int i=0; i<4; i++) {
 				int ny = y + dy[i];
@@ -60,12 +50,12 @@ public class Main {
 				}
 			}
 			
-			used[board[y][x]] = false;
+			alphabet[board[y][x] - 'A'] = false;
 		}
 	}
 
-	private static boolean isRange(int ny, int nx) {
-		if(ny >= 0 && nx >= 0 && ny < R && nx < C) return true;
+	private static boolean isRange(int y, int x) {
+		if(y >= 0 && x >= 0 && y < R && x < C) return true;
 		return false;
 	}
 }
