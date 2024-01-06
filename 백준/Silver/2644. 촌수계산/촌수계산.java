@@ -35,11 +35,9 @@ public class Main {
 			list[end].add(start);
 		}
 		
-		result = 0;
+		result = -1;
 		dfs(startNode, 0);
-		
-		if(result == 0) System.out.println(-1);
-		else System.out.println(result);
+		System.out.println(result);
 	}
 
 	private static void dfs(int node, int count) {
@@ -55,7 +53,5 @@ public class Main {
 				dfs(nextNode, count+1);
 			}
 		}
-		
-		visited[node] = false;
 	}
 }
