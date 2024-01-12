@@ -39,6 +39,7 @@ public class Main {
 			
 			if(current.location == end) {
 				System.out.println(current.time);
+                break;
 			}
 			
 			caze[0] = current.location * 2;
