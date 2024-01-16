@@ -7,6 +7,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
+		StringBuilder sb = new StringBuilder();
 		
 		int N = Integer.parseInt(br.readLine());
 		int max = 0;
@@ -37,7 +38,9 @@ public class Main {
 		}
 		
 		for(int i : cards) {
-			System.out.print(results[i] + " ");
+			sb.append(results[i] + " ");
 		}
+		
+		System.out.println(sb.toString());
 	}
 }
