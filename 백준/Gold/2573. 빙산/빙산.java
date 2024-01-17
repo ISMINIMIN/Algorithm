@@ -54,11 +54,8 @@ public class Main {
 				}
 			}
 			
-			if(check >= 2) break;
-			if(check == 0) {
-				count = 0;
-				break;
-			}
+			if(check == 0) count = 0;
+			if(check >= 2 || check == 0) break;
 			
 			count++;
 		}
@@ -81,9 +78,9 @@ public class Main {
 				int ny = current.y + dy[i];
 				int nx = current.x + dx[i];
 				
-				if(isRange(ny, nx)) {
-					if(sea[ny][nx] == 0 && !visited[ny][nx]) count++;
-					else if(!visited[ny][nx] && sea[ny][nx] != 0) {
+				if(isRange(ny, nx) && !visited[ny][nx]) {
+					if(sea[ny][nx] == 0) count++;
+					else {
 						queue.add(new Node(ny, nx));
 						visited[ny][nx] = true;
 					}
