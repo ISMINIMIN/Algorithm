@@ -19,10 +19,9 @@ public class Main {
 			musics[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		int count = 0;
-		for(int i=1; i<N; i++) {
-			if(musics[i] > musics[i+1]) count++;
-			scores[i] = count;
+		for(int i=1; i<N+1; i++) {
+			scores[i] = scores[i-1];
+			if(musics[i-1] > musics[i]) scores[i]++;
 		}
 		
 		int Q = Integer.parseInt(br.readLine());
@@ -32,8 +31,7 @@ public class Main {
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			
-			if(x == y) sb.append(0 + "\n");
-			else sb.append(scores[y-1] - scores[x-1] + "\n");
+			sb.append(scores[y] - scores[x]).append("\n");
 		}
 		
 		System.out.println(sb.toString());
