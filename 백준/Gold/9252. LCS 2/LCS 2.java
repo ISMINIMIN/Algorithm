@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Stack;
 
 public class Main {
@@ -10,6 +12,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
 		String str1 = br.readLine();
 		String str2 = br.readLine();
@@ -30,7 +33,9 @@ public class Main {
 		lcs();
 		getString();
 		
-		System.out.println(sb.toString());
+		bw.write(sb.toString());
+		bw.flush();
+		bw.close();
 	}
 
 	private static void getString() {
@@ -40,8 +45,6 @@ public class Main {
 		int x = arr2.length;
 		
 		while(y > 0 && x > 0) {
-			if(y == 0 && x == 0) break;
-			
 			if(DP[y][x] == DP[y-1][x]) y--;
 			else if(DP[y][x] == DP[y][x-1]) x--;
 			else {
