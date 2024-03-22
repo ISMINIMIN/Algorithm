@@ -19,8 +19,8 @@ class Solution {
         
         @Override
         public int compareTo(Task t) {
-			return this.startTime - t.startTime;
-		}
+	    return this.startTime - t.startTime;
+	}
     }
     
     public String[] solution(String[][] plans) {
@@ -53,7 +53,6 @@ class Solution {
                 
                 else if(startTime + requiredTime == next.startTime) {
                     result.add(name);
-                    continue;
                 }
                 
                 else {
