@@ -2,15 +2,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
 	static int sum = 0;
 	static int[] parent;
-	static List<Edge> existRoad = new ArrayList<>();
-	static List<Edge> newRoad = new ArrayList<>();
+	static PriorityQueue<Edge> existRoad = new PriorityQueue<>();
+	static PriorityQueue<Edge> newRoad = new PriorityQueue<>();
 	static List<Edge> pickRoad = new ArrayList<>();
 	
 	static class Edge implements Comparable<Edge> {
@@ -63,9 +63,6 @@ public class Main {
 			}
 		}
 		
-		Collections.sort(existRoad);
-		Collections.sort(newRoad);
-		
 		kruskal();
 		sb.append(sum).append(" ").append(pickRoad.size()).append("\n");
 		
@@ -77,14 +74,14 @@ public class Main {
 	}
 
 	private static void kruskal() {
-		for(int i=0; i<existRoad.size(); i++) {
-			Edge edge = existRoad.get(i);
+		while(!existRoad.isEmpty()) {
+			Edge edge = existRoad.poll();
 			union(edge.start, edge.end);
 			sum += edge.cost;
 		}
 		
-		for(int i=0; i<newRoad.size(); i++) {
-			Edge edge = newRoad.get(i);
+		while(!newRoad.isEmpty()) {
+			Edge edge = newRoad.poll();
 			
 			if(find(edge.start) != find(edge.end)) {
 				union(edge.start, edge.end);
