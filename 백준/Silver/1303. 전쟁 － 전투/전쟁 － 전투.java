@@ -11,8 +11,10 @@ public class Main {
 	static char[][] board;
 	static boolean[][] visited;
 	
-	static int[] dy = {-1, 1, 0, 0};
-	static int[] dx = {0, 0, -1, 1};
+	static final char OUR = 'W';
+	static final char ENEMY = 'B';
+	static final int[] DY = {-1, 1, 0, 0};
+	static final int[] DX = {0, 0, -1, 1};
 	
 	static class Node {
 		int y;
@@ -27,9 +29,7 @@ public class Main {
  	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		final char OUR = 'W';
-		final char ENEMY = 'B';
+		StringBuilder sb = new StringBuilder();
 		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
@@ -48,29 +48,30 @@ public class Main {
 		for(int y=0; y<M; y++) {
 			for(int x=0; x<N; x++) {
 				if(!visited[y][x]) {
-					if(board[y][x] == OUR) result[0] += bfs(y, x, OUR);
-					else result[1] += bfs(y, x, ENEMY);
+					bfs(y, x);
 				}
 			}
 		}
 		
-		System.out.println(result[0] + " " + result[1]);
+		sb.append(result[0]).append(" ").append(result[1]);
+		System.out.println(sb.toString());
 	}
 
-	private static int bfs(int y, int x, char team) {
-		int count = 0;
-		
+	private static void bfs(int y, int x) {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(new Node(y, x));
 		visited[y][x] = true;
+		
+		int count = 0;
+		char team = board[y][x];
 		
 		while(!queue.isEmpty()) {
 			Node node = queue.poll();
 			count++;
 			
 			for(int i=0; i<4; i++) {
-				int ny = node.y + dy[i];
-				int nx = node.x + dx[i];
+				int ny = node.y + DY[i];
+				int nx = node.x + DX[i];
 				
 				if(isRange(ny, nx) && !visited[ny][nx]) {
 					if(board[ny][nx] == team) {
@@ -81,11 +82,11 @@ public class Main {
 			}
 		}
 		
-		return (int)Math.pow(count, 2);
+		if(team == OUR) result[0] += count * count;
+		if(team == ENEMY) result[1] += count * count;
 	}
 
 	private static boolean isRange(int y, int x) {
-		if(y >= 0 && x >= 0 && y < M && x < N) return true;
-		return false;
+		return y >= 0 && x >= 0 && y < M && x < N;
 	}
 }
