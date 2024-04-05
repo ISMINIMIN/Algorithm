@@ -4,32 +4,29 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
 	static int sum = 0;
-	static int cnt = 0;
 	static int[] parent;
-	static PriorityQueue<Edge> queue = new PriorityQueue<>();
-	static List<Edge> list = new ArrayList<>();
+	static List<Edge> existRoad = new ArrayList<>();
+	static List<Edge> newRoad = new ArrayList<>();
+	static List<Edge> pickRoad = new ArrayList<>();
 	
 	static class Edge implements Comparable<Edge> {
 		int start;
 		int end;
 		int cost;
-		int status; // 1 - new
 		
-		public Edge(int start, int end, int cost, int status) {
+		public Edge(int start, int end, int cost) {
 			this.start = start;
 			this.end = end;
 			this.cost = cost;
-			this.status = status;
 		}
 
 		@Override
 		public int compareTo(Edge e) {
-			return this.status == e.status ? this.cost - e.cost : this.status - e.status;
+			return this.cost - e.cost;
 		}
 	}
 	
@@ -58,19 +55,21 @@ public class Main {
 			for(int start=1; start<end; start++) {
 				int cost = info[end][start];
 				if(cost < 0) {
-					sum += Math.abs(cost);
-					queue.add(new Edge(start, end, Math.abs(cost), 0));
+					existRoad.add(new Edge(start, end, cost * -1));
 					continue;
 				}
 				
-				queue.add(new Edge(start, end, Math.abs(cost), 1));
+				newRoad.add(new Edge(start, end, cost));
 			}
 		}
 		
-		kruskal();
-		sb.append(sum).append(" ").append(cnt).append("\n");
+		Collections.sort(existRoad);
+		Collections.sort(newRoad);
 		
-		for(Edge edge : list) {
+		kruskal();
+		sb.append(sum).append(" ").append(pickRoad.size()).append("\n");
+		
+		for(Edge edge : pickRoad) {
 			sb.append(edge.start).append(" ").append(edge.end).append("\n");
 		}
 		
@@ -78,16 +77,19 @@ public class Main {
 	}
 
 	private static void kruskal() {
-		while(!queue.isEmpty()) {
-			Edge edge = queue.poll();
+		for(int i=0; i<existRoad.size(); i++) {
+			Edge edge = existRoad.get(i);
+			union(edge.start, edge.end);
+			sum += edge.cost;
+		}
+		
+		for(int i=0; i<newRoad.size(); i++) {
+			Edge edge = newRoad.get(i);
 			
 			if(find(edge.start) != find(edge.end)) {
 				union(edge.start, edge.end);
-				if(edge.status == 1) {
-					list.add(edge);
-					sum += edge.cost;
-					cnt++;
-				}
+				pickRoad.add(edge);
+				sum += edge.cost;
 			}
 		}
 	}
