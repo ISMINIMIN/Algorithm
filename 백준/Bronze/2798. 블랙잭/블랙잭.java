@@ -4,30 +4,45 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+	static int N, M;
+	static int max = 0;
+	static int[] cards;
+	static boolean[] visited;
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		int[] num = new int[N];
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		
+		cards = new int[N];
+		visited = new boolean[N];
 		
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<N; i++) {
-			num[i] = Integer.parseInt(st.nextToken());
+			cards[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		int max = 0;
-		
-		for(int i=0; i<N-2; i++) {
-			for(int j=i+1; j<N-1; j++) {
-				for(int k=j+1; k<N; k++) {
-					int sum = num[i] + num[j] + num[k];
-					if(sum <= M) max = Math.max(max, sum);
-				}
-			}
-		}
+		combine(0, 0, 0);
 		
 		System.out.println(max);
+	}
+
+	private static void combine(int depth, int now, int sum) {
+		if(sum > M) return;
+		
+		if(depth == 3) {
+			max = Math.max(max, sum);
+			return;
+		}
+		
+		for(int i=now; i<N; i++) {
+			if(!visited[i]) {
+				visited[i] = true;
+				combine(depth+1, i+1, sum+cards[i]);
+				visited[i] = false;
+			}
+		}
 	}
 }
