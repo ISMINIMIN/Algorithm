@@ -8,6 +8,7 @@ public class Main {
 	static int max = 0;
 	static int[] offCnt;
 	static String[] lamps;
+	static boolean[] check;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,6 +19,7 @@ public class Main {
 		
 		offCnt = new int[N];
 		lamps = new String[N];
+		check = new boolean[N];
 		
 		for(int i=0; i<N; i++) {
 			lamps[i] = br.readLine();
@@ -35,10 +37,15 @@ public class Main {
 
 	private static void checkLamp() {
 		for(int i=0; i<N; i++) {
+			if(check[i]) continue;
+			
 			if(offCnt[i] <= K && (K - offCnt[i]) % 2 == 0) {
 				int sameLine = 0;
 				for(int j=0; j<N; j++) {
-					if(lamps[i].equals(lamps[j])) sameLine++;
+					if(lamps[i].equals(lamps[j])) {
+						sameLine++;
+						check[j] = true;
+					}
 				}
 				
 				max = Math.max(max, sameLine);
