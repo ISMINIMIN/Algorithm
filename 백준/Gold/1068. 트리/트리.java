@@ -8,7 +8,6 @@ public class Main {
 	static int N, deleteNode, rootNode;
 	static int result = 0;
 	static ArrayList<ArrayList<Integer>> list;
-	static boolean[] visited;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +15,6 @@ public class Main {
 		
 		N = Integer.parseInt(br.readLine());
 		list = new ArrayList<>();
-		visited = new boolean[N];
 		
 		for(int i=0; i<N; i++) {
 			list.add(new ArrayList<>());
