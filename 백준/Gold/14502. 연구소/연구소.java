@@ -14,7 +14,7 @@ public class Main {
 	static final int MAX_NEW_WALL = 3;
 	
 	static int max = 0;
-	static int N, M;
+	static int N, M, blankCnt;
 	static int[][] lab;
 	static List<Node> viruses;
 	
@@ -46,6 +46,7 @@ public class Main {
 			for(int x=0; x<M; x++) {
 				lab[y][x] = Integer.parseInt(st.nextToken());
 				if(lab[y][x] == VIRUS) viruses.add(new Node(y, x));
+				if(lab[y][x] == BLANK) blankCnt++;
 			}
 		}
 		
@@ -72,6 +73,7 @@ public class Main {
 	}
 
 	private static void bfs() {
+		int newVirus = 0;
 		Queue<Node> queue = new LinkedList<>();
 		
 		int[][] tempLab = new int[N][M];
@@ -94,26 +96,13 @@ public class Main {
 					if(tempLab[ny][nx] == BLANK) {
 						queue.add(new Node(ny, nx));
 						tempLab[ny][nx] = VIRUS;
+						newVirus++;
 					}
 				}
 			}
 		}
 		
-		countSafeZone(tempLab);
-	}
-
-	private static void countSafeZone(int[][] tempLab) {
-		int count = 0;
-		
-		for(int y=0; y<N; y++) {
-			for(int x=0; x<M; x++) {
-				if(tempLab[y][x] == BLANK) {
-					count++;
-				}
-			}
-		}
-		
-		max = Math.max(max, count);
+		max = Math.max(max, blankCnt - newVirus - MAX_NEW_WALL);
 	}
 
 	private static boolean isRange(int y, int x) {
