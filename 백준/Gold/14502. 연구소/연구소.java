@@ -13,7 +13,7 @@ public class Main {
 	static final int VIRUS = 2;
 	static final int MAX_NEW_WALL = 3;
 	
-	static int max = 0;
+	static int virusCnt = Integer.MAX_VALUE;
 	static int N, M, blankCnt;
 	static int[][] lab;
 	static List<Node> viruses;
@@ -52,7 +52,7 @@ public class Main {
 		
 		dfs(0);
 		
-		System.out.println(max);
+		System.out.println(blankCnt - virusCnt - MAX_NEW_WALL);
 	}
 	
 	private static void dfs(int depth) {
@@ -88,6 +88,8 @@ public class Main {
 		while(!queue.isEmpty()) {
 			Node node = queue.poll();
 			
+			if(newVirus > virusCnt) break;
+			
 			for(int i=0; i<4; i++) {
 				int ny = node.y + dy[i];
 				int nx = node.x + dx[i];
@@ -102,7 +104,7 @@ public class Main {
 			}
 		}
 		
-		max = Math.max(max, blankCnt - newVirus - MAX_NEW_WALL);
+		virusCnt = Math.min(virusCnt, newVirus);
 	}
 
 	private static boolean isRange(int y, int x) {
