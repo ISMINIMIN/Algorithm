@@ -3,49 +3,40 @@ import java.util.*;
 class Solution {
     List<List<Integer>> list;
     
-    public class Node {
-        int road;
-        int distance;
-        
-        public Node(int road, int distance) {
-            this.road = road;
-            this.distance = distance;
-        }
-    }
-    
     public int[] solution(int n, int[][] roads, int[] sources, int destination) {
         int[] answer = new int[sources.length];
         
         initList(n, roads);
         
+        int[] distances = findPath(destination, n);
+        
         for(int i=0; i<sources.length; i++) {
-            answer[i] = findPath(sources[i], destination, n);
+            answer[i] = distances[sources[i]];
         }
         
         return answer;
     }
     
-    private int findPath(int start, int destination, int n) {
-        if(start == destination) return 0;
+    private int[] findPath(int start, int n) {
+        int[] distances = new int[n + 1];
+        Arrays.fill(distances, -1);
         
-        Queue<Node> queue = new LinkedList<>();
-        boolean[] visited = new boolean[n + 1];
-        queue.add(new Node(start, 0));
-        visited[start] = true;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        distances[start] = 0;
         
         while(!queue.isEmpty()) {
-            Node now = queue.poll();
+            int now = queue.poll();
             
-            for(int next : list.get(now.road)) {
-                if(!visited[next]) {
-                    if(next == destination) return now.distance + 1;
-                    queue.add(new Node(next, now.distance + 1));
-                    visited[next] = true;
+            for(int next : list.get(now)) {
+                if(distances[next] == -1) {
+                    queue.add(next);
+                    distances[next] = distances[now] + 1;
                 }
             }
         }
         
-        return -1;
+        return distances;
     }
     
     private void initList(int n, int[][] roads) {
