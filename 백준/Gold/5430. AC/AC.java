@@ -1,77 +1,67 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Iterator;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		
-		int T = Integer.parseInt(br.readLine());
-		
-		for(int t=0; t<T; t++) {
-			String pLine = br.readLine();
-			
-			boolean reverse = false;
-			boolean error = false;
-			
-			char[] p = new char[pLine.length()];
-			for(int i=0; i<p.length; i++) {
-				p[i] = pLine.charAt(i);
-			}
-			
-			int n = Integer.parseInt(br.readLine());
-			String[] num = new String[n];
-			String nLine = br.readLine();
-			nLine = nLine.replace("[", "").replace("]", "");
-			
-			num = nLine.split(",");
-			Deque<Integer> queue = new LinkedList<>();
-			
-			for(int i=0; i<n; i++) {
-				queue.add(Integer.parseInt(num[i]));
-			}
-			
-			for(int i=0; i<p.length; i++) {
-				if(p[i] == 'D') {
-					if(queue.isEmpty()) {
-						sb.append("error\n");
-						error = true;
-						break;
-					}
-					
-					if(reverse) queue.removeLast();
-					else queue.removeFirst();
-				} else {
-					reverse = !reverse;
-				}
-			}
-			
-			if(!error) {
-				if(reverse) {
-					sb.append("[");
-					while (!queue.isEmpty()) {
-						sb.append(queue.removeLast());
-						if (!queue.isEmpty()) {
-							sb.append(",");
-						}
-					}
-					sb.append("]\n");
-				} else {
-					sb.append("[");
-					while (!queue.isEmpty()) {
-						sb.append(queue.removeFirst());
-						if (!queue.isEmpty()) {
-							sb.append(",");
-						}
-					}
-					sb.append("]\n");
-				}
-			}
-		}
-		
-		System.out.println(sb.toString());
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+
+        for (int t = 0; t < T; t++) {
+            String p = br.readLine();
+            int n = Integer.parseInt(br.readLine());
+            String line = br.readLine();
+
+            Deque<Integer> deque = new ArrayDeque<>();
+            if (n > 0) {
+                String[] nums = line.substring(1, line.length() - 1).split(",");
+                for (String num : nums) {
+                    deque.add(Integer.parseInt(num));
+                }
+            }
+
+            boolean isReversed = false;
+            boolean isError = false;
+
+            for (char command : p.toCharArray()) {
+                if (command == 'R') isReversed = !isReversed;
+                else if (command == 'D') {
+                    if (deque.isEmpty()) {
+                        isError = true;
+                        break;
+                    }
+
+                    if (isReversed) deque.removeLast();
+                    else deque.removeFirst();
+                }
+            }
+
+            if (isError) System.out.println("error");
+            else printDeque(deque, isReversed);
+        }
+    }
+
+    private static void printDeque(Deque<Integer> deque, boolean isReversed) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        if (!deque.isEmpty()) {
+            Iterator<Integer> it;
+
+            if (isReversed) it = deque.descendingIterator();
+            else it = deque.iterator();
+
+            while (it.hasNext()) {
+                sb.append(it.next());
+                if (it.hasNext()) sb.append(",");
+            }
+        }
+
+        sb.append("]");
+        System.out.println(sb);
+    }
 }
